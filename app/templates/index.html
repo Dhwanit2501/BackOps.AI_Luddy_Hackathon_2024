@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dashboard</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <!-- Include ApexCharts library -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+</head>
+<body>
+    <!-- <video class="video-background" autoplay muted loop>
+        <source src="../static/media/back1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video> -->
+    <div class="dashboard-container">
+        <header>
+            <h2 class="title"></h2>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Overview Section -->
+            <section class="overview-section dashboard-card">
+                <h2 id="count-div-header"></h2>
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <div class="chart-wrapper">
+                            <!-- Placeholder for the ApexCharts radial chart -->
+                            <div id="chart1"></div>
+                        </div>
+                    </div>
+                
+                    <div class="chart-card">
+                        <div class="chart-wrapper">
+                            <!-- Placeholder for the ApexCharts radial chart -->
+                            <div id="chart2"></div>
+                        </div>
+                    </div>
+                
+                    <div class="chart-card">
+                        <div class="chart-wrapper">
+                            <!-- Placeholder for the ApexCharts radial chart -->
+                            <div id="chart3"></div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-wrapper">
+                            <!-- Placeholder for the ApexCharts chart -->
+                            <div id="chart4"></div>
+                        </div>
+                        <p class="chartlabel"></p>
+                    </div>
+                </div>
+            
+
+            </section>
+
+
+            <section class="calendar-section dashboard-card">
+                <h2>Calendar</h2>
+                <div class="calendar-container">
+                    <div id="calendar" class="calendar"></div>
+                </div>
+            </section>
+
+            <!-- Ask Anything Section -->
+            <section class="ask-section dashboard-card">
+                <h2>Hey! How can I help you?</h2>
+                <div id="chatMessages" class="chat-messages">
+                    <!-- <div class="chat-input-container"> -->
+                        {% for question, answer in questions_answers %}
+                          <div class="message question">
+                            {% if question %}
+                                <p>{{ question }}</p>
+                            {% endif %}
+                          </div>
+                          <div class="message answer">
+                            {% if answer %}
+                                <p>{{ answer }}</p>
+                            {% endif %}
+                          </div>
+                        {% endfor %}
+                    <!-- </div> -->
+                </div>
+                <form action="{{url_for('parsePrompt')}}" method="POST">
+                    <div class="chat-input-container">
+                        <input type="text" id="prompt" name="prompt" placeholder="Type your question..." required>
+                        <!-- <button id="voiceBtn" class="voice-btn"><img class="mic" src="../static/media/mic1.png"/></button> -->
+                        <button id="sendBtn" class="send-btn"><img class="mic" src="../static/media/send.png" /></button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Query Visualization Section -->
+            <section class="query-section dashboard-card">
+                <h2>Key Lifecycle Information (Show Today's Transaction)</h2>
+                <div class="visualization-container">
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>Created Time</th>
+                                    <th>Updated Time</th>
+                                    <th>Deleted Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for op in key_lifecycle_data %}
+                                {% if op == 'Insert' %}
+                                {% for entry in key_lifecycle_data['Insert'] %}
+                                <tr>
+                                    <td>{{op}}</td>
+                                    <td>{{entry['key']}}</td>
+                                    <td>{{entry['value']}}</td>
+                                    <td>{{entry['created_time']}}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                {% endfor %}
+                                {% elif op == 'Update' %}
+                                {% for entry in key_lifecycle_data['Update'] %}
+                                <tr>
+                                    <td>{{op}}</td>
+                                    <td>{{entry['key']}}</td>
+                                    <td>{{entry['value']}}</td>
+                                    <td>-</td>
+                                    <td>{{entry['updated_time']}}</td>
+                                    <td>-</td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                {% for entry in key_lifecycle_data['Delete'] %}
+                                <tr>
+                                    <td>{{op}}</td>
+                                    <td>{{entry['key']}}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>{{entry['deleted_time']}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            
+            
+            <section class="charts-section dashboard-card">
+                <h2>Analytics</h2>
+                <div class="charts-container">
+                    <div class="activity-chart">
+                        <h3>Past 7 Days Activity</h3>
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                    <!-- Add more charts here if needed -->
+                </div>
+            </section>
+            
+        </main>
+    </div>
+    <script>
+        new Typed(".title", {
+            strings: ["BackOps.AI"], // Single word
+            typeSpeed: 200,       // Typing speed
+            backSpeed:30,
+            loop: true,          // No looping
+            showCursor: false,     // Optional cursor
+            startDelay:1000,
+            backDelay: 10000
+        });
+    </script>
+    <script src="../static/js/dashboard.js"></script>
+</body>
+</html>
