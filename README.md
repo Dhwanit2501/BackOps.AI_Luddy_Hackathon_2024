@@ -1,6 +1,6 @@
-# BackOps.AI - Revolutionizing Backend Operations with AI 💡
+## **BackOps.AI** - Revolutionizing Backend Operations with AI 💡
 
-## 🏆 2024 Luddy Hackathon Winner, Indiana University Bloomington 🏆
+### 🏆 2024 Luddy Hackathon Winner, Indiana University Bloomington 🏆
 
 ---
 
