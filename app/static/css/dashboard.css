@@ -1,0 +1,567 @@
+/* dashboard.css */
+:root {
+    --primary-color: #A4C3B2; /* Sage Green */
+    --secondary-color: #86b384; /* Pastel Mint */
+    --background-color: #4a5759; /* Pale Green White */
+    --card-background: #7876766e; /* White */
+    --border-color: #516657; /* Light Mint Green */
+    --text-color: #36454F; /* Slate Gray */
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Sends the video behind the content */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('../media/5630939.jpg');  
+           /* Set height to 100% of viewport height */
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.dashboard-container {
+    max-height: 100%;
+    overflow: hidden; /* Ensure that no internal scrolling occurs */
+    padding: 20px;
+    max-width: 100%;
+}
+
+.title{
+    text-align: center;
+    margin: 15px;
+    font-size: 40px;
+    animation: appearFromTop 1s ease-out forwards, colorChange 100s infinite ease-in-out;
+    white-space: nowrap;
+    height: 40px; /* Adjust based on your font size */
+    line-height: 40px; /* Center text vertically */
+    margin: 40px;
+
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+}
+
+.dashboard-grid {
+    display: grid;
+    /* Define columns with 6 fractions total for easier ratio calculations */
+    grid-template-columns: repeat(6, 1fr);
+    /* Define two rows with auto height */
+    grid-template-rows: auto auto;
+    gap: 20px;
+    overflow:hidden; /* Prevent internal overflow */
+}
+
+.dashboard-card {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 3px solid transparent; /* Start with a transparent border */
+    transition: transform 0.4s ease-in-out, border 0.4s ease-in-out;
+}
+
+.dashboard-card:hover{
+    border: 3px solid #F89B29;
+    border-radius: 10px;
+}
+
+/* Overview Section Styles */
+.overview-section {
+    grid-column: span 4; /* Takes up 4 parts out of 6 */
+    animation: appearFromLeft 1s ease-out forwards;
+}
+
+
+.charts-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Individual chart card styles */
+.chart-card {
+  background: transparent;
+  border-radius: 8px;
+  padding: 16px;
+  width: 200px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out
+}
+
+/* Wrapper for SVG to center the chart */
+.chart-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+#chart {
+  width: 100%;
+  height: 100%;
+}
+
+#chart1 {
+  width: 100%;
+  height: 100%;
+}
+/* Basic styling for the SVG elements */
+.radial-chart {
+  transform: rotate(-90deg); /* Rotate to make it start from top */
+  width: 93%;
+  height: 99%;
+}
+
+.circle-bg {
+  fill: none;
+  stroke-width: 5;
+  stroke: #e0e0e0; /* Light grey background */
+}
+
+.circle {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round; /* Rounded ends for a smooth finish */
+}
+
+.circle-insert {
+  stroke: #4CAF50; /* Green for insert action */
+}
+
+.circle-update {
+  stroke: #2196F3; /* Blue for update action */
+}
+
+.circle-delete {
+  stroke: #F44336; /* Red for delete action */
+}
+
+/* Center the chart value inside the circle */
+.chart-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.chart-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333; /* Dark text for visibility */
+}
+
+/* Label under each chart */
+.chartlabel {
+  font-size: 14px;
+  color: #333;
+  margin-top: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hover effect for the card */
+.chart-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Query Visualization Section */
+.query-section {
+    grid-column: span 2; /* Takes up 2 parts out of 6 */
+    animation: appearFromBottom 1s ease-out forwards;
+}
+
+.query-section h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #f8f7ff;
+    font-family: "Cinzel", serif;
+}
+h2{
+    color: #f8f7ff;
+    font-family: "Cinzel", serif;
+}
+h3{
+    color: #f8f7ff;
+    font-family: "Cinzel", serif;
+}
+
+.visualization-container {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.view-logs-btn {
+    padding: 8px 15px;
+    display: flex;          /* Enables flexbox layout */
+    align-items: center;    /* Vertically aligns text and image */
+    justify-content: center;
+    background-color: #ba53708b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    font-family: "Cinzel"
+}
+
+.view-logs-btn:hover{
+    transform: scale(1.05);
+}
+
+.view-logs-btn img {
+    margin-left: 8px; /* Add space between the text and image */
+    height: 18px;     /* Set a fixed height for the image */
+    width: auto;      /* Maintain the image's aspect ratio */
+}
+
+
+/* Ask Section Styles */
+.ask-section {
+    display: flex;
+    flex-direction: column;
+    grid-column: span 2;
+    animation: appearFromLeft 1s ease-out forwards;
+}
+
+.chat-input-container {
+    height: 50px; /* Fixed height for input area */
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    border: 2px solid rgba(255, 255, 255, 0.567);
+    border-radius: 10px;
+}
+
+.chat-input-container input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: transparent;
+    /* font-family: "Cinzel"; */
+    color: rgba(255, 255, 255, 0.567)
+}
+.chat-input-container input:focus{
+    border: none;
+    outline: none;
+}
+
+.voice-btn, .send-btn {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    background: transparent;
+}
+.send-btn{
+    padding-right: 10px;
+}
+.mic{
+    width: 20px;
+}
+
+.chat-messages {
+    height: calc(100% - 70px); /* Subtract input container height */
+    overflow-y: auto;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Analytics Section Styles */
+.analytics-section {
+    height: 350px; /* Fixed height */
+    overflow: hidden;
+    grid-column: span 3;
+}
+
+.analytics-container {
+    height: calc(100% - 40px); /* Subtract header height */
+    display: flex;
+    gap: 20px;
+}
+.calendar-section{
+    grid-column: span 2;
+    font-family: "Cinzel";
+    animation: appearFromRight 1s ease-out forwards;
+}
+.calendar-container {
+    flex: 1;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.charts-section{
+    grid-column: span 2;
+    animation: appearFromRight 1s ease-out forwards;
+    
+}
+.activity-chart {
+    flex: 1;
+    max-height: 100%;
+    position: relative;
+}
+
+.activity-chart canvas {
+    max-height: calc(100% - 30px); /* Subtract title height */
+}
+
+.calendar {
+    background: transparent;
+    padding: 10px;
+    overflow: hidden;
+    font-family: "Cinzel"
+}
+
+.calendar .header {
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-family: "Cinzel"
+}
+
+.calendar .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px;
+    font-family: "Cinzel"
+}
+
+.calendar .day {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    color: white;
+    font-family: "Cinzel"
+}
+
+.calendar .day:hover{
+    background-color: rgba(255, 255, 255, 0.233);
+    transform: scale(1.05);
+    transition: ease-in-out 0.3s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+    
+    .overview-section,
+    .query-section,
+    .ask-section,
+    .analytics-section {
+        grid-column: span 6; /* Full width on smaller screens */
+    }
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.question {
+    justify-content: flex-end;
+}
+
+.answer {
+    justify-content: flex-start;
+}
+
+.message p {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin: 0;
+    font-family: "Cinzel"
+}
+
+.question p {
+    background-color: #f0f0f0;
+    color: #333;
+    border-bottom-left-radius: 0;
+    font-family: "Cinzel"
+}
+
+.answer p {
+    background-color: #ba5370cb;
+    color: #fff;
+    border-bottom-right-radius: 0;
+    font-family: "Cinzel"
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.flex-button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.flex-button:hover {
+    background-color: #2980b9;
+}
+
+.flex-button:first-child {
+    margin-left: 0;
+}
+
+.flex-button:last-child {
+    margin-right: 0;
+}
+
+.table-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    overflow: scroll;
+    /* font-family: "Cinzel", serif; */
+}
+
+.custom-table::-webkit-scrollbar {
+    display: none;
+}
+
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    width: 50px;
+    background: #ffffffa2;
+    border-radius: 10px;
+    overflow: scroll;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 10px 10px;
+    text-align: left;
+    
+}
+
+.custom-table th {
+    background-color: #ba5370;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+    /* font-family: "Cinzel", serif; */
+}
+
+
+
+.custom-table td {
+    font-size: 12px;
+    color: #555;
+    /* font-family: "Cinzel", serif; */
+    font-weight: bold;
+}
+
+@keyframes appearFromLeft {
+    0% {
+        transform: translateX(-200px); /* Small size and far back */
+        opacity: 0; /* Invisible */
+    }
+    100% {
+        transform: translateX(0); /* Full size and in place */
+        opacity: 1; /* Fully visible */
+    }
+}
+@keyframes appearFromRight {
+    0% {
+        transform: translateX(200px); /* Small size and far back */
+        opacity: 0; /* Invisible */
+    }
+    100% {
+        transform: translateX(0); /* Full size and in place */
+        opacity: 1; /* Fully visible */
+    }
+}
+@keyframes appearFromBottom {
+    0% {
+        transform: translateY(200px); /* Small size and far back */
+        opacity: 0; /* Invisible */
+    }
+    100% {
+        transform: translateY(0); /* Full size and in place */
+        opacity: 1; /* Fully visible */
+    }
+}
+@keyframes appearFromTop {
+    0% {
+        transform: translateY(-200px); /* Small size and far back */
+        opacity: 0; /* Invisible */
+    }
+    100% {
+        transform: translateY(0); /* Full size and in place */
+        opacity: 1; /* Fully visible */
+    }
+}
+@keyframes colorChange {
+    0% { color: #ffb3c6; } /* Pastel Pink */
+    25% { color: #b3e0ff; } /* Pastel Blue */
+    50% { color: #c8f7c5; } /* Pastel Green */
+    75% { color: #fff2b3; } /* Pastel Yellow */
+    100% { color: #e6c9ff; } /* Pastel Purple */
+}
+
